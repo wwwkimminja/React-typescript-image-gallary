@@ -4,8 +4,12 @@ import './App.css';
 
 function App() {
   return (
-    <div >
-    
+    <div className='container'>
+      <div className='initial-box'>
+        <div className='text-center'>No Image <br/> Add Image
+        </div>
+        <div className='plus-box'>+</div>
+      </div>
     </div>
   );
 }
