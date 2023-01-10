@@ -1,12 +1,28 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import './App.css';
 import ImageBox from './components/ImageBox';
+import { useDropzone } from 'react-dropzone';
 
 function App() {
 
-  const inputRef=useRef<HTMLInputElement>(null);
 
   const [imageList,setImageList]=useState<string[]>([])
+  const onDrop = useCallback((acceptedFiles: string | any[]) => {
+		if (acceptedFiles.length) {
+
+
+			for (const file of acceptedFiles) {
+				const reader = new FileReader();
+
+				reader.readAsDataURL(file)
+				reader.onloadend = (event) => {
+					setImageList(prev => [...prev, event.target?.result as string])
+				}
+			}
+		}
+	}, [])
+
+	const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
   return (
     <div className='container'>
@@ -14,19 +30,7 @@ function App() {
         {
           imageList.length===0&&<div className='text-center'>No Image <br/> Add Image</div>
         }
-        <input type="file" ref={inputRef} onChange={(event)=>{
-         
-          if(event.currentTarget.files?.[0]){
-            const file=event.currentTarget.files[0]
-            const reader=new FileReader();
-            reader.readAsDataURL(file)
-            reader.onload=(event)=>{
-              setImageList((prev)=>[...prev,event.target?.result as string])
-            }
-           
-          } 
-         
-        }}/>
+
  
         <>
     {
@@ -35,9 +39,14 @@ function App() {
         })
       }
         </>
-        <div className='plus-box' onClick={()=>{
-          inputRef.current?.click()
-        }}>+</div>
+        <div className='plus-box'
+					{...getRootProps()}
+				>
+					<input
+						{...getInputProps()}
+					/>
+					+
+				</div>
       </div>
   
     </div>
