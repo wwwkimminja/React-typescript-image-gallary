@@ -17,8 +17,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 100px;
+  min-height: 100px;
+
 }
-.initial-box{
+.gallery-box{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,9 +29,22 @@
   gap:80px
 
 }
+
+.row{
+  flex-direction: row;
+  gap:100px;
+  overflow: scroll;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 140px;
+
+}
 @media screen and (max-width:500px){
-  .initial-box{
+  .gallery-box{
     gap:40px;
+  }
+  .row{
+    padding:0 40px;
   }
 }
 .image-box{
@@ -37,6 +53,10 @@
   min-width: 200px;
   min-height: 200px;
 
+}
+.image-box img{
+  width: inherit;
+  height: inherit;
 }
 input{
   display: none;
